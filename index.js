@@ -6,12 +6,14 @@ module.exports = {
      * Convert 24-hour time to 12-hour format.
      *
      * @param {number} hour Hour to convert (0-23)
-     * @return {object} { hour, meridian }
+     * @return {object} { hour, meridiem } (meridian is also returned for backwards compatibility)
      */
     to12Hour: function to12Hour(hour) {
+        var meridiem = hour < 12 ? 'am' : 'pm';
         return {
             hour: ((hour + 11) % 12 + 1),
-            meridian: hour < 12 ? 'am' : 'pm'
+            meridiem: meridiem,
+            meridian: meridiem
         };
     },
 
@@ -20,10 +22,12 @@ module.exports = {
      *
      * @param {object} time Time object
      * @param {number} time.hour Hour to convert (1-12)
-     * @param {string} time.meridian Hour meridian (am/pm)
+     * @param {string} time.meridiem Hour meridiem (am/pm). 'time.meridian' is
+     *  supported for backwards compatibility.
      * @return {number}
      */
     to24Hour: function to24Hour(time) {
-        return (time.meridian === 'am' ? 0 : 12) + (time.hour % 12);
+        var meridiem = time.meridiem || time.meridian;
+        return (meridiem === 'am' ? 0 : 12) + (time.hour % 12);
     }
 };
