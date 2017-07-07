@@ -1,6 +1,6 @@
 {
   "name": "hour-convert",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Micro library for converting hours between 12-hour and 24-hour formats",
   "main": "index.js",
   "scripts": {
