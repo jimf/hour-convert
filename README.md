@@ -19,17 +19,20 @@ Install using npm:
 var hourConvert = require('hour-convert');
 
 // 24-hour to 12-hour format
-hourConvert.to12Hour(0);   // { hour: 12, meridian: 'am' }
-hourConvert.to12Hour(6);   // { hour: 6, meridian: 'am' }
-hourConvert.to12Hour(12);  // { hour: 12, meridian: 'pm' }
-hourConvert.to12Hour(18);  // { hour: 6, meridian: 'pm' }
+hourConvert.to12Hour(0);   // { hour: 12, meridiem: 'am' }
+hourConvert.to12Hour(6);   // { hour: 6, meridiem: 'am' }
+hourConvert.to12Hour(12);  // { hour: 12, meridiem: 'pm' }
+hourConvert.to12Hour(18);  // { hour: 6, meridiem: 'pm' }
 
 // 12-hour to 24-hour format
-hourConvert.to24Hour({ hour: 12, meridian: 'am' });  // 0
-hourConvert.to24Hour({ hour:  6, meridian: 'am' });  // 6
-hourConvert.to24Hour({ hour: 12, meridian: 'pm' });  // 12
-hourConvert.to24Hour({ hour:  6, meridian: 'pm' });  // 18
+hourConvert.to24Hour({ hour: 12, meridiem: 'am' });  // 0
+hourConvert.to24Hour({ hour:  6, meridiem: 'am' });  // 6
+hourConvert.to24Hour({ hour: 12, meridiem: 'pm' });  // 12
+hourConvert.to24Hour({ hour:  6, meridiem: 'pm' });  // 18
 ```
+
+_Note: The spelling "meridian" is also supported/returned for backwards
+compatibility._
 
 ## License
 
