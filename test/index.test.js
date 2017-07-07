@@ -29,12 +29,14 @@ test('to12Hour', function(assert) {
         { input: 21, expected: { hour:  9, meridiem: 'pm' } },
         { input: 22, expected: { hour: 10, meridiem: 'pm' } },
         { input: 23, expected: { hour: 11, meridiem: 'pm' } }
-    ];
+    ].map(function(testcase) {
+        // For backwards compatibility
+        testcase.expected.meridian = testcase.expected.meridiem;
+        return testcase;
+    });
 
     cases.forEach(function(testcase) {
-        // For backwards compatibility
-        var expected = Object.assign({}, testcase.expected, { meridian: testcase.expected.meridiem });
-        assert.deepEqual(hourConvert.to12Hour(testcase.input), expected,
+        assert.deepEqual(hourConvert.to12Hour(testcase.input), testcase.expected,
             'should convert ' + testcase.input + ' to expected 12-hour time');
     });
 
@@ -70,18 +72,19 @@ test('to24Hour', function(assert) {
     ];
 
     // For backwards compatibility
-    var meridianCases = JSON.parse(JSON.stringify(cases)).map(function(testCase) {
-        var meridiem = testCase.input.meridiem;
-        delete testCase.input.meridiem;
-        testCase.input.meridian = meridiem;
-        return testCase;
-    })
-
-    cases = cases.concat(meridianCases)
+    cases = cases.concat(cases.map(function(testcase) {
+        return {
+            input: {
+                hour: testcase.input.hour,
+                meridian: testcase.input.meridiem
+            },
+            expected: testcase.expected
+        };
+    }));
 
     cases.forEach(function(testcase) {
         assert.deepEqual(hourConvert.to24Hour(testcase.input), testcase.expected,
-            'should convert ' + testcase.input.hour + testcase.input.meridiem + ' to expected 24-hour time');
+            'should convert ' + testcase.input.hour + (testcase.input.meridiem || testcase.input.meridian) + ' to expected 24-hour time');
     });
 
     assert.end();
